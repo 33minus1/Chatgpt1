@@ -46,9 +46,13 @@ export function LoginPage() {
       await verifyPhoneOtp(phone, normalizedCode)
       saveSession({ phone, role })
       await ensureRole(role)
-      const hasProfile = role === 'seeker' ? await loadSeekerProfile() : await loadEmployerProfile()
-      if (role === 'seeker' && hasProfile?.fullName) return navigate('/account')
-      if (role === 'employer' && hasProfile?.companyName) return navigate('/employer')
+      if (role === 'seeker') {
+        const profile = await loadSeekerProfile()
+        if (profile?.fullName) return navigate('/account')
+      } else {
+        const profile = await loadEmployerProfile()
+        if (profile?.companyName) return navigate('/employer')
+      }
       setStep('profile')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'کد تأیید درست نیست یا منقضی شده است.')

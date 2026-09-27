@@ -236,9 +236,12 @@ export async function ensureRole(role: UserRole) {
   if (!supabase) return
   const { data: { user }, error: userError } = await supabase.auth.getUser()
   if (userError || !user) throw userError ?? new Error('کاربر وارد نشده است.')
-  const patch = role === 'seeker'
-    ? { id: user.id, phone: user.phone ?? '', is_job_seeker: true }
-    : { id: user.id, phone: user.phone ?? '', is_employer: true }
+  const patch = {
+    id: user.id,
+    phone: user.phone ?? '',
+    is_job_seeker: role === 'seeker',
+    is_employer: role === 'employer',
+  }
   const { error } = await supabase.from('profiles').upsert(patch, { onConflict: 'id' })
   if (error) throw error
 }
