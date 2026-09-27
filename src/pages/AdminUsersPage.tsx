@@ -1,0 +1,4 @@
+import { useEffect, useState } from 'react'
+import { AdminGate } from './AdminGate'
+import { listAdminUsers, type AdminUserItem } from '../lib/adminBackend'
+export function AdminUsersPage(){const [rows,setRows]=useState<AdminUserItem[]>([]);useEffect(()=>{listAdminUsers().then(setRows).catch(()=>{})},[]);return <AdminGate><main className="admin-page"><div className="container admin-wrap"><header className="admin-head"><div><h1>کاربران</h1><p>مشاهده ساده کاربران ثبت‌شده؛ بدون ابزارهای اضافی.</p></div></header><div className="admin-list">{rows.map(row=><article className="admin-card admin-user-card" key={row.id}><div><h2>{row.name}</h2><p>{row.phone} · {row.city || 'شهر نامشخص'}</p><div className="chips small-chips">{row.roles.map(role=><span key={role}>{role}</span>)}</div></div><small>{row.createdAt}</small></article>)}</div></div></main></AdminGate>}
