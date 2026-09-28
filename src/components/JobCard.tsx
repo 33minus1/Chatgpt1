@@ -5,24 +5,32 @@ export function JobCard({ job }: { job: Job }) {
   const companyInitial = job.company?.trim()?.[0] || 'ک'
 
   return (
-    <article className="job-card">
-      <div className="job-card-top">
+    <article className="job-card job-card-v2">
+      <header className="job-card-header">
         <div className="company-mark" aria-hidden="true">{companyInitial}</div>
-        <div>
+        <div className="job-card-identity">
           <h3>{job.title}</h3>
           <p className="company-name">{job.company}</p>
         </div>
+      </header>
+
+      <div className="job-card-facts-v2" aria-label="مشخصات شغل">
+        <span><b aria-hidden="true">⌖</b>{job.city}</span>
+        <span><b aria-hidden="true">◷</b>{job.type}</span>
       </div>
-      <div className="job-meta">
-        <span>{job.city}</span>
-        <span className="meta-dot">·</span>
-        <span>{job.type}</span>
+
+      <div className="job-card-salary-box">
+        <span>حقوق و مزایا</span>
+        <strong>{job.salary}</strong>
       </div>
-      <p className="salary">{job.salary}</p>
-      <div className="job-card-footer">
-        <span className="muted">{job.publishedAt}</span>
-        <Link className="btn btn-secondary" to={`/jobs/${job.id}`}>مشاهده شغل</Link>
-      </div>
+
+      <footer className="job-card-footer job-card-footer-v2">
+        <div className="job-card-date">
+          <span>تاریخ انتشار</span>
+          <strong>{job.publishedAt}</strong>
+        </div>
+        <Link className="job-card-action" to={`/jobs/${job.id}`}>مشاهده آگهی <span aria-hidden="true">←</span></Link>
+      </footer>
     </article>
   )
 }
