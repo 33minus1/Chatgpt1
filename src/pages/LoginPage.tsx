@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CitySelect } from '../components/CitySelect'
 import { backendMode, ensureRole, loadEmployerProfile, loadSeekerProfile, saveEmployerProfileBackend, saveSeekerProfileBackend, sendPhoneOtp, verifyPhoneOtp } from '../lib/backend'
+import { assertAccountNotDeleted } from '../lib/deletedAccount'
 import { getSession, saveSession, type UserRole } from '../lib/session'
 import { cleanShortText, isValidIranMobile, normalizePhone, toEnglishDigits } from '../lib/validation'
 
@@ -45,6 +46,7 @@ export function LoginPage() {
     try {
       const normalizedCode = toEnglishDigits(code).trim()
       await verifyPhoneOtp(phone, normalizedCode)
+      await assertAccountNotDeleted()
       saveSession({ phone, role })
       await ensureRole(role)
       if (role === 'seeker') {
@@ -63,6 +65,7 @@ export function LoginPage() {
   async function submitProfile(e: FormEvent) {
     e.preventDefault(); setBusy(true); setError('')
     try {
+      await assertAccountNotDeleted()
       if (role === 'seeker') {
         const fullName = cleanShortText(name, 80)
         if (fullName.length < 2) { setBusy(false); return setError('نام و نام خانوادگی را کامل‌تر وارد کن.') }
