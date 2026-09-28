@@ -1,4 +1,4 @@
-/* v1.3.3 — stronger job-list separation */
+/* v1.3.4 — stronger job-list separation with a colored title bar */
 
 /* The results area is a section, not another giant card. */
 .jobs-page .jobs-results-panel {
@@ -21,18 +21,18 @@
   gap: 20px;
 }
 
-/* Each job is now its own strong visual object. */
+/* Each job is a complete independent visual object. */
 .job-card-v2 {
   position: relative;
   display: block;
   padding: 0;
   overflow: hidden;
   background: #ffffff;
-  border: 1px solid #d8e0ec;
+  border: 1px solid #cfd9e8;
   border-radius: 20px;
   box-shadow:
-    0 1px 2px rgba(16, 24, 40, .04),
-    0 10px 26px rgba(16, 24, 40, .075);
+    0 2px 4px rgba(16, 24, 40, .04),
+    0 12px 28px rgba(16, 24, 40, .085);
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 
@@ -42,67 +42,104 @@
 
 .job-card-v2:hover {
   transform: translateY(-2px);
-  border-color: #b8c8ef;
+  border-color: #afbee3;
   box-shadow:
-    0 2px 5px rgba(16, 24, 40, .05),
-    0 15px 34px rgba(16, 24, 40, .11);
+    0 3px 7px rgba(16, 24, 40, .05),
+    0 17px 38px rgba(16, 24, 40, .12);
 }
 
-.job-card-header {
+/* Full-width title strip: visually separates the job title from the body. */
+.job-card-titlebar {
   position: relative;
-  display: grid;
-  grid-template-columns: 52px minmax(0, 1fr);
-  gap: 13px;
-  align-items: center;
-  padding: 18px 18px 15px;
-  background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
-  border-bottom: 1px solid #edf0f5;
+  padding: 14px 18px 15px;
+  background: linear-gradient(135deg, #1f52e8 0%, #3568f7 58%, #5b7fff 100%);
+  border-bottom: 1px solid rgba(20, 55, 160, .28);
+  color: #fff;
 }
 
-.job-card-header::after {
+.job-card-titlebar::after {
   content: '';
   position: absolute;
-  right: 0;
-  top: 16px;
-  bottom: 16px;
-  width: 4px;
-  border-radius: 999px 0 0 999px;
-  background: #2f63f6;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(255,255,255,.08), transparent 42%);
+}
+
+.job-card-titlebar-label {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-bottom: 2px;
+  color: rgba(255,255,255,.76);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1px;
+}
+
+.job-card-v2 .job-card-titlebar h3 {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #ffffff !important;
+  font-size: 19px;
+  line-height: 1.6;
+  font-weight: 900;
+  letter-spacing: -.15px;
+}
+
+.job-card-body-v2 {
+  background: #fff;
+}
+
+/* Company identity gets its own row inside the white body. */
+.job-company-row {
+  display: grid;
+  grid-template-columns: 50px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 15px 18px 11px;
 }
 
 .job-card-v2 .company-mark {
-  width: 52px;
-  height: 52px;
-  border-radius: 15px;
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
   background: #eef3ff;
-  border: 1px solid #d7e2ff;
-  box-shadow: inset 0 0 0 4px rgba(255,255,255,.5);
-  font-size: 19px;
-}
-
-.job-card-identity {
-  min-width: 0;
-}
-
-.job-card-v2 h3 {
-  margin: 0;
-  font-size: 19px;
-  line-height: 1.55;
-  color: #172033;
+  border: 1px solid #d5e0ff;
+  box-shadow: inset 0 0 0 4px rgba(255,255,255,.48);
+  color: #2457f5;
+  font-size: 18px;
   font-weight: 900;
 }
 
-.job-card-v2 .company-name {
-  margin: 3px 0 0;
-  color: #667085;
-  font-size: 14px;
+.job-company-copy {
+  min-width: 0;
+  display: grid;
+  gap: 1px;
+}
+
+.job-company-copy span {
+  color: #98a2b3;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.job-company-copy strong {
+  overflow: hidden;
+  color: #344054;
+  font-size: 15px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .job-card-facts-v2 {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  padding: 14px 18px 4px;
+  padding: 5px 18px 4px;
 }
 
 .job-card-facts-v2 span {
@@ -111,7 +148,7 @@
   gap: 6px;
   min-height: 34px;
   padding: 5px 10px;
-  border: 1px solid #e2e7ef;
+  border: 1px solid #e1e6ee;
   border-radius: 10px;
   background: #f7f9fc;
   color: #475467;
@@ -130,8 +167,8 @@
   gap: 2px;
   margin: 11px 18px 16px;
   padding: 12px 14px;
-  background: #f7f9ff;
-  border: 1px solid #e0e7fb;
+  background: #f6f8ff;
+  border: 1px solid #dce5fb;
   border-radius: 13px;
 }
 
@@ -153,8 +190,8 @@
   align-items: center;
   gap: 12px;
   padding: 13px 18px;
-  background: #fbfcfe;
-  border-top: 1px solid #e8edf4;
+  background: #f8fafc;
+  border-top: 1px solid #e4eaf2;
 }
 
 .job-card-date {
@@ -200,33 +237,37 @@
 
 @media (max-width: 759px) {
   .jobs-page .jobs-grid {
-    gap: 18px;
+    gap: 20px;
   }
 
   .job-card-v2 {
     border-radius: 18px;
-    border-color: #d3dce9;
+    border-color: #ccd7e7;
     box-shadow:
-      0 2px 5px rgba(16, 24, 40, .045),
-      0 9px 22px rgba(16, 24, 40, .085);
+      0 2px 6px rgba(16, 24, 40, .05),
+      0 11px 25px rgba(16, 24, 40, .09);
   }
 
-  .job-card-header {
-    grid-template-columns: 48px minmax(0, 1fr);
-    padding: 16px 16px 13px;
+  .job-card-titlebar {
+    padding: 12px 16px 13px;
   }
 
-  .job-card-v2 .company-mark {
-    width: 48px;
-    height: 48px;
-  }
-
-  .job-card-v2 h3 {
+  .job-card-v2 .job-card-titlebar h3 {
     font-size: 18px;
   }
 
+  .job-company-row {
+    grid-template-columns: 46px minmax(0, 1fr);
+    padding: 14px 16px 9px;
+  }
+
+  .job-card-v2 .company-mark {
+    width: 46px;
+    height: 46px;
+  }
+
   .job-card-facts-v2 {
-    padding: 12px 16px 3px;
+    padding: 5px 16px 3px;
   }
 
   .job-card-salary-box {
