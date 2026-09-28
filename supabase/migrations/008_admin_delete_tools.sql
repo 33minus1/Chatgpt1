@@ -1,51 +1,43 @@
 -- Karzan admin destructive actions
--- Centralized, admin-only deletion for jobs, companies and user accounts.
+-- Admins can permanently delete jobs/companies and remove an app account.
+-- Removed users are tombstoned so the same auth identity cannot recreate an app account.
 
-create or replace function public.admin_delete_entity(p_kind text, p_id uuid)
-returns jsonb
-language plpgsql
-security definer
-set search_path = public, auth
-as $$
-declare
-  v_count integer := 0;
-  v_admin uuid := auth.uid();
-begin
-  if v_admin is null or not public.is_admin() then
-    raise exception 'دسترسی مدیریت تأیید نشد.';
-  end if;
+create table if not exists public.deleted_users (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  deleted_at timestamptz not null default now(),
+  deleted_by uuid references auth.users(id) on delete set null
+);
 
-  if p_kind = 'job' then
-    delete from public.jobs where id = p_id;
-    get diagnostics v_count = row_count;
+alter table public.deleted_users enable row level security;
 
-  elsif p_kind = 'company' then
-    delete from public.companies where id = p_id;
-    get diagnostics v_count = row_count;
+create policy "deleted_users_read_self_or_admin" on public.deleted_users
+for select to authenticated
+using (user_id = auth.uid() or public.is_admin());
 
-  elsif p_kind = 'user' then
-    if p_id = v_admin then
-      raise exception 'مدیر نمی‌تواند حساب خودش را حذف کند.';
-    end if;
+create policy "deleted_users_admin_insert" on public.deleted_users
+for insert to authenticated
+with check (public.is_admin() and deleted_by = auth.uid());
 
-    if exists (select 1 from public.admin_users where user_id = p_id) then
-      raise exception 'حساب مدیر سایت از این بخش قابل حذف نیست.';
-    end if;
+create policy "deleted_users_admin_delete" on public.deleted_users
+for delete to authenticated
+using (public.is_admin());
 
-    delete from auth.users where id = p_id;
-    get diagnostics v_count = row_count;
+create policy "jobs_admin_delete" on public.jobs
+for delete to authenticated
+using (public.is_admin());
 
-  else
-    raise exception 'نوع حذف معتبر نیست.';
-  end if;
+create policy "companies_admin_delete" on public.companies
+for delete to authenticated
+using (public.is_admin());
 
-  if v_count = 0 then
-    raise exception 'رکورد موردنظر پیدا نشد.';
-  end if;
+create policy "profiles_admin_delete" on public.profiles
+for delete to authenticated
+using (public.is_admin());
 
-  return jsonb_build_object('ok', true, 'kind', p_kind, 'id', p_id);
-end;
-$$;
+create policy "company_members_admin_delete" on public.company_members
+for delete to authenticated
+using (public.is_admin());
 
-revoke all on function public.admin_delete_entity(text, uuid) from public, anon;
-grant execute on function public.admin_delete_entity(text, uuid) to authenticated;
+create policy "notifications_admin_delete" on public.notifications
+for delete to authenticated
+using (public.is_admin());
