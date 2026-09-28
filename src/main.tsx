@@ -11,6 +11,7 @@ import './styles/job-list-v2.css'
 import './styles/job-detail-v2.css'
 import './styles/employer-cards-v2.css'
 import './styles/cities-admin.css'
+import './styles/admin-delete.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
