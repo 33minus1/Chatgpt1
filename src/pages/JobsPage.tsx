@@ -13,7 +13,8 @@ export function JobsPage() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    setLoading(true); setError('')
+    setLoading(true)
+    setError('')
     listJobs({ q: params.get('q') ?? '', city: params.get('city') ?? '', category: params.get('category') ?? '' })
       .then(setItems)
       .catch((e) => setError(e instanceof Error ? e.message : 'بارگذاری آگهی‌ها انجام نشد.'))
@@ -27,5 +28,51 @@ export function JobsPage() {
     setParams(next)
   }
 
-  return <main className="page-shell container jobs-page"><div className="page-heading"><h1>فرصت‌های شغلی</h1><p>کار مناسب خودت را پیدا کن.</p></div><div className="jobs-searchbar"><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="عنوان شغل" /><select value={city} onChange={(e) => setCity(e.target.value)}><option value="">همه شهرها</option><option>تهران</option><option>کرج</option><option>تبریز</option><option>سنندج</option></select><button className="btn btn-primary" onClick={search}>جستجو</button></div>{loading ? <div className="empty-state"><p>در حال بارگذاری فرصت‌ها...</p></div> : error ? <div className="empty-state"><h2>آگهی‌ها بارگذاری نشد.</h2><p>{error}</p></div> : <><div className="result-summary"><strong>{items.length}</strong> فرصت شغلی</div><div className="jobs-grid">{items.length ? items.map((job) => <JobCard job={job} key={job.id} />) : <div className="empty-state"><h2>شغلی با این مشخصات پیدا نکردیم.</h2><p>شهر یا عبارت جستجو را تغییر بده.</p><button className="btn btn-secondary" onClick={() => { setQuery(''); setCity(''); setParams({}) }}>پاک کردن جستجو</button></div>}</div></>}</main>
+  return (
+    <main className="page-shell container jobs-page">
+      <div className="page-heading">
+        <h1>فرصت‌های شغلی</h1>
+        <p>عنوان شغل یا شهر را انتخاب کن و آگهی‌های فعال را ببین.</p>
+      </div>
+
+      <section className="jobs-filter-card" aria-label="فیلتر فرصت‌های شغلی">
+        <div className="jobs-filter-title">
+          <strong>جستجو و فیلتر</strong>
+          <span>برای نتیجه دقیق‌تر، عنوان شغل و شهر را مشخص کن.</span>
+        </div>
+        <div className="jobs-searchbar">
+          <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="عنوان شغل" />
+          <select value={city} onChange={(e) => setCity(e.target.value)}>
+            <option value="">همه شهرها</option>
+            <option>تهران</option>
+            <option>کرج</option>
+            <option>تبریز</option>
+            <option>سنندج</option>
+          </select>
+          <button className="btn btn-primary" onClick={search}>جستجو</button>
+        </div>
+      </section>
+
+      <section className="jobs-results-panel">
+        {loading ? (
+          <div className="empty-state"><p>در حال بارگذاری فرصت‌ها...</p></div>
+        ) : error ? (
+          <div className="empty-state"><h2>آگهی‌ها بارگذاری نشد.</h2><p>{error}</p></div>
+        ) : (
+          <>
+            <div className="result-summary"><strong>{items.length}</strong> فرصت شغلی</div>
+            <div className="jobs-grid">
+              {items.length ? items.map((job) => <JobCard job={job} key={job.id} />) : (
+                <div className="empty-state">
+                  <h2>شغلی با این مشخصات پیدا نکردیم.</h2>
+                  <p>شهر یا عبارت جستجو را تغییر بده.</p>
+                  <button className="btn btn-secondary" onClick={() => { setQuery(''); setCity(''); setParams({}) }}>پاک کردن جستجو</button>
+                </div>
+              )}
+            </div>
+          </>
+        )}
+      </section>
+    </main>
+  )
 }
