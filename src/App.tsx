@@ -16,6 +16,7 @@ import { LoginPage } from './pages/LoginPage'
 import { AccountPage } from './pages/AccountPage'
 import { EmployerAccountPage } from './pages/EmployerAccountPage'
 import { EmployerApplicantsOverviewPage } from './pages/EmployerApplicantsOverviewPage'
+import { AdminLoginPage } from './pages/AdminLoginPage'
 import { AdminHomePage } from './pages/AdminHomePage'
 import { AdminJobsPage } from './pages/AdminJobsPage'
 import { AdminCompaniesPage } from './pages/AdminCompaniesPage'
@@ -58,6 +59,7 @@ export default function App() {
         <Route path="/employer/jobs/:id/applicants/:applicantId" element={<ApplicantDetailPage />} />
         <Route path="/employer/account" element={<EmployerAccountPage />} />
         <Route path="/employer/notifications" element={<NotificationsPage employer />} />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/admin" element={<AdminHomePage />} />
         <Route path="/admin/jobs" element={<AdminJobsPage />} />
         <Route path="/admin/companies" element={<AdminCompaniesPage />} />
