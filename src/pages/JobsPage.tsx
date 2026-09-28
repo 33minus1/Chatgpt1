@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { JobCard } from '../components/JobCard'
+import { CitySelect } from '../components/CitySelect'
 import { listJobs } from '../lib/backend'
 import type { Job } from '../data/mock'
 
@@ -42,13 +43,7 @@ export function JobsPage() {
         </div>
         <div className="jobs-searchbar">
           <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="عنوان شغل" />
-          <select value={city} onChange={(e) => setCity(e.target.value)}>
-            <option value="">همه شهرها</option>
-            <option>تهران</option>
-            <option>کرج</option>
-            <option>تبریز</option>
-            <option>سنندج</option>
-          </select>
+          <CitySelect value={city} onChange={setCity} includeAll />
           <button className="btn btn-primary" onClick={search}>جستجو</button>
         </div>
       </section>
