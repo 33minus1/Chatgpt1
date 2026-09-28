@@ -1,4 +1,5 @@
 import { isSupabaseConfigured, supabase } from './supabase'
+import { clearSession } from './session'
 
 export async function assertAccountNotDeleted() {
   if (!isSupabaseConfigured || !supabase) return
@@ -13,6 +14,7 @@ export async function assertAccountNotDeleted() {
 
   if (error) throw error
   if (data) {
+    clearSession()
     await supabase.auth.signOut().catch(() => {})
     throw new Error('این حساب توسط مدیریت حذف شده است.')
   }
