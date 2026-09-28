@@ -43,6 +43,10 @@ export async function deleteAdminUser(id: string) {
   if (userError || !user) throw userError ?? new Error('ابتدا وارد حساب مدیریت شوید.')
   if (user.id === id) throw new Error('مدیر نمی‌تواند حساب خودش را حذف کند.')
 
+  const { data: targetIsAdmin, error: adminCheckError } = await supabase.rpc('is_admin_user', { target_user_id: id })
+  if (adminCheckError) throw adminCheckError
+  if (targetIsAdmin) throw new Error('حساب مدیر سایت از این بخش قابل حذف نیست.')
+
   const { error: tombstoneError } = await supabase.from('deleted_users').insert({
     user_id: id,
     deleted_by: user.id,
