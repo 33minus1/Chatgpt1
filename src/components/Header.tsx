@@ -19,7 +19,7 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <Link className="brand" to={adminMode ? '/admin' : employerMode ? '/employer' : '/'} aria-label="صفحه اصلی کاریابی">{adminMode ? 'مدیریت کاریابی' : 'کاریابی'}</Link>
+        <Link className="brand" to={adminMode ? '/admin' : employerMode ? '/employer' : '/'} aria-label="صفحه اصلی کارزان">{adminMode ? 'مدیریت کارزان' : 'کارزان'}</Link>
         <nav className="desktop-nav" aria-label="ناوبری اصلی">
           {adminMode ? (
             <><Link to="/admin/jobs">آگهی‌ها</Link><Link to="/admin/companies">شرکت‌ها</Link><Link to="/admin/users">کاربران</Link><Link to="/admin/cities">شهرها</Link><Link to="/">نمای سایت</Link></>
