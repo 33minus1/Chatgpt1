@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { CitySelect } from '../components/CitySelect'
 import { backendMode, ensureRole, loadEmployerProfile, loadSeekerProfile, saveEmployerProfileBackend, saveSeekerProfileBackend, sendPhoneOtp, verifyPhoneOtp } from '../lib/backend'
 import { getSession, saveSession, type UserRole } from '../lib/session'
 import { cleanShortText, isValidIranMobile, normalizePhone, toEnglishDigits } from '../lib/validation'
@@ -15,7 +16,7 @@ export function LoginPage() {
   const [code, setCode] = useState('')
   const [name, setName] = useState('')
   const [companyName, setCompanyName] = useState('')
-  const [city, setCity] = useState('تهران')
+  const [city, setCity] = useState('سقز')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
 
@@ -89,7 +90,7 @@ export function LoginPage() {
 
           {step === 'code' && <form className="simple-form" onSubmit={submitCode}><div className="progress-head"><span>مرحله ۲ از ۲</span><span>تأیید شماره</span></div><div className="progress-track"><span style={{ width: '100%' }} /></div><div className="form-heading"><h1>کد تأیید را وارد کن</h1><p>{backendMode === 'supabase' ? `کد ارسال‌شده به ${phone}` : 'در پیش‌نمایش، هر کد ۴ رقمی یا بیشتر قابل قبول است.'}</p></div><label><span>کد تأیید</span><input dir="ltr" inputMode="numeric" value={code} onChange={(e) => setCode(e.target.value)} placeholder="1234" /></label>{error && <p className="field-error">{error}</p>}<button disabled={busy} className="btn btn-primary btn-large">{busy ? 'در حال بررسی...' : 'ورود'}</button><button className="text-button" type="button" onClick={() => setStep('phone')}>تغییر شماره {phone}</button></form>}
 
-          {step === 'profile' && <form className="simple-form" onSubmit={submitProfile}><div className="form-heading"><h1>{role === 'seeker' ? 'فقط یک معرفی کوتاه' : 'اطلاعات مجموعه'}</h1><p>این اطلاعات را بعداً از «حساب من» می‌توانی ویرایش کنی.</p></div>{role === 'seeker' ? <label><span>نام و نام خانوادگی</span><input value={name} onChange={(e) => setName(e.target.value)} placeholder="مثال: محمد احمدی" /></label> : <label><span>نام شرکت یا مجموعه</span><input value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="مثال: ترۆپک" /></label>}<label><span>شهر</span><select value={city} onChange={(e) => setCity(e.target.value)}><option>تهران</option><option>کرج</option><option>تبریز</option><option>سنندج</option><option>ارومیه</option></select></label>{error && <p className="field-error">{error}</p>}<button disabled={busy} className="btn btn-primary btn-large">{busy ? 'در حال ذخیره...' : 'ادامه'}</button></form>}
+          {step === 'profile' && <form className="simple-form" onSubmit={submitProfile}><div className="form-heading"><h1>{role === 'seeker' ? 'فقط یک معرفی کوتاه' : 'اطلاعات مجموعه'}</h1><p>این اطلاعات را بعداً از «حساب من» می‌توانی ویرایش کنی.</p></div>{role === 'seeker' ? <label><span>نام و نام خانوادگی</span><input value={name} onChange={(e) => setName(e.target.value)} placeholder="مثال: محمد احمدی" /></label> : <label><span>نام شرکت یا مجموعه</span><input value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder="مثال: ترۆپک" /></label>}<label><span>شهر</span><CitySelect value={city} onChange={setCity} /></label>{error && <p className="field-error">{error}</p>}<button disabled={busy} className="btn btn-primary btn-large">{busy ? 'در حال ذخیره...' : 'ادامه'}</button></form>}
         </section>
       </div>
     </main>
