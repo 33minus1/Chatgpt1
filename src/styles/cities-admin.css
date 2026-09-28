@@ -1,0 +1,81 @@
+/* v1.3 — admin city management */
+.admin-city-create,
+.admin-city-list-section {
+  margin-top: 18px;
+  padding: 18px;
+  background: rgba(255,255,255,.82);
+  border: 1px solid var(--line, #e1e6ee);
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(16,24,40,.04);
+}
+
+.admin-city-create h2,
+.admin-city-list-section h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.admin-city-create p {
+  margin: 4px 0 14px;
+  color: #667085;
+}
+
+.admin-city-form {
+  display: grid;
+  gap: 9px;
+}
+
+.admin-city-list {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-city-card {
+  display: grid;
+  gap: 12px;
+  padding: 15px;
+  background: #fff;
+  border: 1px solid #dfe5ee;
+  border-right: 4px solid #cfd7e6;
+  border-radius: 14px;
+}
+
+.admin-city-card.active { border-right-color: #2457f5; }
+.admin-city-card.inactive { background: #fafbfc; opacity: .82; }
+
+.admin-city-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-city-title-row h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.admin-city-card p {
+  margin: 4px 0 0;
+  color: #667085;
+  font-size: 13px;
+}
+
+@media (min-width: 760px) {
+  .admin-city-create {
+    display: grid;
+    grid-template-columns: 1fr minmax(360px, .8fr);
+    align-items: end;
+    gap: 24px;
+  }
+
+  .admin-city-form {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+
+  .admin-city-card {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}
