@@ -8,6 +8,7 @@ import './styles/refresh.css'
 import './styles/mobile-polish.css'
 import './styles/internal-polish.css'
 import './styles/job-list-v2.css'
+import './styles/job-detail-v2.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
