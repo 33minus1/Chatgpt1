@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer className="site-footer">
       <div className="container footer-inner">
-        <div><strong>کاریابی</strong><p>پیدا کردن کار و نیرو، بدون فرم‌های پیچیده.</p></div>
+        <div><strong>کارزان</strong><p>پیدا کردن کار و نیرو، بدون فرم‌های پیچیده.</p></div>
         <nav aria-label="پیوندهای راهنما">
           <Link to="/help">راهنما</Link>
           <Link to="/terms">قوانین استفاده</Link>
