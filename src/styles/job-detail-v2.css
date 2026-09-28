@@ -1,0 +1,295 @@
+/* v1.3.4 — job detail visual continuity with job cards */
+
+.detail-hero-v2 {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #d5dfef;
+  border-radius: 22px;
+  box-shadow:
+    0 2px 5px rgba(16,24,40,.04),
+    0 14px 34px rgba(16,24,40,.085);
+}
+
+.detail-hero-v2::before {
+  display: none;
+}
+
+.detail-title-bar {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, #1f4fe0 0%, #2f63f6 58%, #5f84ff 100%);
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,.18);
+}
+
+.detail-title-kicker {
+  display: block;
+  margin-bottom: 3px;
+  color: #dbe5ff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.detail-title-bar h1,
+.detail-hero-card.detail-hero-v2 h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 30px;
+  line-height: 1.45;
+  font-weight: 900;
+  letter-spacing: -.35px;
+}
+
+.detail-live-badge {
+  min-height: 34px;
+  padding: 5px 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(255,255,255,.16);
+  border: 1px solid rgba(255,255,255,.34);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.detail-live-badge::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: #86efac;
+  box-shadow: 0 0 0 3px rgba(134,239,172,.16);
+}
+
+.detail-summary-body {
+  position: relative;
+  padding: 19px 20px 21px;
+  background: #fff;
+}
+
+.detail-company-row {
+  display: grid;
+  grid-template-columns: 50px minmax(0,1fr);
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #edf1f6;
+}
+
+.detail-company-mark {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #eef3ff;
+  border: 1px solid #d8e2ff;
+  color: #2457f5;
+  font-size: 19px;
+  font-weight: 900;
+}
+
+.detail-company-label {
+  display: block;
+  color: #98a2b3;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.detail-hero-v2 .detail-company {
+  margin: 1px 0 0;
+}
+
+.detail-hero-v2 .detail-company a {
+  color: #344054;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.detail-hero-v2 .detail-company a::before {
+  display: none;
+}
+
+.detail-meta-v2 {
+  margin-top: 14px;
+  gap: 8px;
+}
+
+.detail-meta-v2 span:nth-child(odd) {
+  min-height: 34px;
+  padding: 5px 10px;
+  background: #f7f9fc;
+  border: 1px solid #e1e7ef;
+  border-radius: 10px;
+  color: #475467;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.detail-salary-panel {
+  display: grid;
+  gap: 2px;
+  margin-top: 13px;
+  padding: 12px 14px;
+  max-width: 420px;
+  border: 1px solid #dce5fb;
+  border-radius: 13px;
+  background: linear-gradient(180deg, #f8faff, #f4f7ff);
+}
+
+.detail-salary-panel > span {
+  color: #7b879b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.detail-salary-panel > strong {
+  color: #213d85;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.detail-hero-v2 .job-expiry-note {
+  margin: 10px 0 0;
+  color: #667085;
+}
+
+.detail-hero-v2 .detail-apply-desktop {
+  margin-top: 17px;
+  min-width: 190px;
+}
+
+/* Content sections feel like separate information blocks, not one flat page. */
+.detail-sections {
+  margin-top: 18px;
+  gap: 16px;
+}
+
+.detail-section {
+  border: 1px solid #dfe5ee;
+  box-shadow:
+    0 1px 2px rgba(16,24,40,.025),
+    0 6px 16px rgba(16,24,40,.04);
+}
+
+.detail-section::before {
+  height: 4px;
+  background: #e4eaff;
+  opacity: 1;
+}
+
+.detail-section h2 {
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #edf0f5;
+  color: #172033;
+  font-size: 18px;
+}
+
+.detail-section h2::before {
+  width: 9px;
+  height: 9px;
+  background: #2457f5;
+  box-shadow: 0 0 0 4px #eef3ff;
+}
+
+.detail-company-section {
+  background: linear-gradient(180deg, #fff, #fbfcff);
+}
+
+.detail-company-section > strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #1d2939;
+  font-size: 16px;
+}
+
+/* Desktop summary keeps content compact and CTA clearly separated. */
+@media (min-width: 760px) {
+  .detail-hero-card.detail-hero-v2 {
+    display: block;
+    padding: 0;
+  }
+
+  .detail-summary-body {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) auto;
+    column-gap: 26px;
+    align-items: end;
+  }
+
+  .detail-company-row,
+  .detail-meta-v2,
+  .detail-salary-panel,
+  .detail-hero-v2 .job-expiry-note {
+    grid-column: 1;
+  }
+
+  .detail-hero-v2 .detail-apply-desktop {
+    grid-column: 2;
+    grid-row: 1 / 5;
+    align-self: end;
+    margin: 0;
+  }
+}
+
+@media (max-width: 759px) {
+  .detail-hero-v2 {
+    border-radius: 18px;
+  }
+
+  .detail-title-bar {
+    padding: 15px 16px;
+    gap: 10px;
+  }
+
+  .detail-title-bar h1,
+  .detail-hero-card.detail-hero-v2 h1 {
+    font-size: 23px;
+    line-height: 1.5;
+  }
+
+  .detail-live-badge {
+    min-height: 30px;
+    padding: 4px 9px;
+  }
+
+  .detail-summary-body {
+    padding: 16px;
+  }
+
+  .detail-company-row {
+    grid-template-columns: 46px minmax(0,1fr);
+    gap: 10px;
+    padding-bottom: 13px;
+  }
+
+  .detail-company-mark {
+    width: 46px;
+    height: 46px;
+  }
+
+  .detail-meta-v2 {
+    margin-top: 12px;
+  }
+
+  .detail-salary-panel {
+    margin-top: 11px;
+    max-width: none;
+  }
+
+  .detail-sections {
+    margin-top: 14px;
+    gap: 14px;
+  }
+}
