@@ -21,6 +21,7 @@ import { AdminHomePage } from './pages/AdminHomePage'
 import { AdminJobsPage } from './pages/AdminJobsPage'
 import { AdminCompaniesPage } from './pages/AdminCompaniesPage'
 import { AdminUsersPage } from './pages/AdminUsersPage'
+import { AdminCitiesPage } from './pages/AdminCitiesPage'
 import { CompaniesPage } from './pages/CompaniesPage'
 import { CompanyDetailPage } from './pages/CompanyDetailPage'
 import { NotificationsPage } from './pages/NotificationsPage'
@@ -64,6 +65,7 @@ export default function App() {
         <Route path="/admin/jobs" element={<AdminJobsPage />} />
         <Route path="/admin/companies" element={<AdminCompaniesPage />} />
         <Route path="/admin/users" element={<AdminUsersPage />} />
+        <Route path="/admin/cities" element={<AdminCitiesPage />} />
         <Route path="/admin/reports" element={<AdminReportsPage />} />
         <Route path="*" element={<PlaceholderPage title="صفحه پیدا نشد" text="این آدرس وجود ندارد یا هنوز ساخته نشده است." />} />
       </Routes>
