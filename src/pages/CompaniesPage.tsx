@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { CitySelect } from '../components/CitySelect'
 import { listCompaniesBackend, type PublicCompany } from '../lib/backend'
 
 export function CompaniesPage() {
@@ -31,10 +32,7 @@ export function CompaniesPage() {
 
       <div className="company-searchbar">
         <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="نام شرکت یا حوزه فعالیت" />
-        <select value={city} onChange={(e) => setCity(e.target.value)}>
-          <option value="">همه شهرها</option>
-          <option>تهران</option><option>کرج</option><option>تبریز</option><option>سنندج</option>
-        </select>
+        <CitySelect value={city} onChange={setCity} includeAll />
       </div>
 
       {loading ? <div className="empty-state"><p>در حال بارگذاری شرکت‌ها...</p></div> : error ? (
