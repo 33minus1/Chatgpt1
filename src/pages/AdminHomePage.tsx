@@ -15,10 +15,11 @@ export function AdminHomePage() {
       <Link to="/admin/users" className="admin-stat"><strong>{stats.users.toLocaleString('fa-IR')}</strong><span>کاربر</span></Link>
       <Link to="/admin/reports" className={`admin-stat ${stats.pendingReports ? 'attention' : ''}`}><strong>{stats.pendingReports.toLocaleString('fa-IR')}</strong><span>گزارش آگهی</span></Link>
     </div>
-    <section className="admin-quick"><h2>کارهای امروز</h2>
+    <section className="admin-quick"><h2>مدیریت سایت</h2>
       <Link to="/admin/jobs"><span>بررسی آگهی‌های جدید</span><strong>{stats.pendingJobs.toLocaleString('fa-IR')}</strong></Link>
       <Link to="/admin/companies"><span>بررسی شرکت‌های جدید</span><strong>{stats.pendingCompanies.toLocaleString('fa-IR')}</strong></Link>
       <Link to="/admin/reports"><span>بررسی گزارش‌های کارجوها</span><strong>{stats.pendingReports.toLocaleString('fa-IR')}</strong></Link>
+      <Link to="/admin/cities"><span>مدیریت شهرهای سایت</span><strong>›</strong></Link>
     </section>
   </div></main></AdminGate>
 }
