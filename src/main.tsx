@@ -10,6 +10,7 @@ import './styles/internal-polish.css'
 import './styles/job-list-v2.css'
 import './styles/job-detail-v2.css'
 import './styles/employer-cards-v2.css'
+import './styles/cities-admin.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
