@@ -22,7 +22,7 @@ export function Header() {
         <Link className="brand" to={adminMode ? '/admin' : employerMode ? '/employer' : '/'} aria-label="صفحه اصلی کاریابی">{adminMode ? 'مدیریت کاریابی' : 'کاریابی'}</Link>
         <nav className="desktop-nav" aria-label="ناوبری اصلی">
           {adminMode ? (
-            <><Link to="/admin/jobs">آگهی‌ها</Link><Link to="/admin/companies">شرکت‌ها</Link><Link to="/admin/users">کاربران</Link><Link to="/">نمای سایت</Link></>
+            <><Link to="/admin/jobs">آگهی‌ها</Link><Link to="/admin/companies">شرکت‌ها</Link><Link to="/admin/users">کاربران</Link><Link to="/admin/cities">شهرها</Link><Link to="/">نمای سایت</Link></>
           ) : employerMode ? (
             <><Link to="/employer/jobs">آگهی‌های من</Link><Link to="/employer/applicants">متقاضیان</Link><Link to="/">بخش کارجو</Link></>
           ) : (
