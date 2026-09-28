@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { sendPhoneOtp, verifyPhoneOtp } from '../lib/backend'
 import { isAdminBackend } from '../lib/adminBackend'
+import { clearSession } from '../lib/session'
 import { isValidIranMobile, normalizePhone, toEnglishDigits } from '../lib/validation'
 
 type Step = 'phone' | 'code' | 'waiting'
@@ -38,6 +39,7 @@ export function AdminLoginPage() {
     setError('')
     try {
       await verifyPhoneOtp(phone, toEnglishDigits(code).trim())
+      clearSession()
       const allowed = await isAdminBackend()
       if (allowed) return navigate('/admin')
       setStep('waiting')
