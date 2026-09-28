@@ -1,0 +1,231 @@
+/* v1.3.5 — stronger employer/admin card separation */
+
+.employer-job-list,
+.applicant-list {
+  gap: 16px;
+}
+
+.employer-job-card-v2,
+.applicant-card-v2 {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #d9e1ec;
+  border-radius: 18px;
+  box-shadow:
+    0 1px 2px rgba(16,24,40,.035),
+    0 8px 22px rgba(16,24,40,.065);
+}
+
+.employer-job-card-v2 {
+  border-right: 1px solid #d9e1ec;
+}
+
+.employer-job-card-v2:hover,
+.applicant-card-v2:hover {
+  border-color: #becbec;
+  box-shadow:
+    0 2px 4px rgba(16,24,40,.04),
+    0 12px 28px rgba(16,24,40,.09);
+}
+
+.employer-job-title-bar,
+.applicant-title-bar {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  background: linear-gradient(135deg, #eef3ff 0%, #e8efff 100%);
+  border-bottom: 1px solid #d7e1fa;
+}
+
+.employer-job-title-bar h3,
+.applicant-title-bar h2 {
+  margin: 0;
+  color: #1e3a8a;
+  font-size: 17px;
+  line-height: 1.55;
+  font-weight: 900;
+}
+
+.employer-job-title-bar .job-state,
+.applicant-title-bar .candidate-state {
+  background: #fff;
+  border-color: #d6deeb;
+  box-shadow: 0 1px 2px rgba(16,24,40,.03);
+}
+
+.employer-job-title-bar .job-state.active,
+.applicant-title-bar .candidate-state.good {
+  background: #ecfdf3;
+}
+
+.employer-job-title-bar .job-state.rejected,
+.applicant-title-bar .candidate-state.bad {
+  background: #fef3f2;
+}
+
+.employer-job-body {
+  padding: 14px 15px 15px;
+}
+
+.employer-job-meta {
+  margin: 0 0 11px !important;
+  color: #667085 !important;
+  font-size: 13px !important;
+  font-weight: 700;
+}
+
+.employer-job-facts {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) 110px;
+  gap: 9px;
+}
+
+.employer-job-facts > div,
+.employer-job-applicants-count {
+  display: grid;
+  gap: 2px;
+  padding: 10px 11px;
+  border: 1px solid #e2e7ef;
+  border-radius: 11px;
+  background: #f8faff;
+}
+
+.employer-job-facts span,
+.employer-job-applicants-count span {
+  color: #98a2b3;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.employer-job-facts strong,
+.employer-job-applicants-count strong {
+  color: #344054;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.employer-job-applicants-count {
+  width: fit-content;
+  min-width: 94px;
+}
+
+.employer-job-body .job-inline-note {
+  margin: 11px 0 0 !important;
+  padding: 9px 10px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #e7ebf0;
+  color: #667085 !important;
+  font-size: 12px !important;
+}
+
+.employer-job-body .job-inline-note.expiry {
+  background: #fffaf0;
+  border-color: #f4dfaa;
+  color: #8a5b13 !important;
+}
+
+.employer-job-footer,
+.applicant-card-footer {
+  margin: 0;
+  padding: 11px 15px;
+  background: #fbfcfe;
+  border-top: 1px solid #e7ecf2;
+}
+
+.employer-job-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.employer-job-footer .btn,
+.applicant-card-footer .btn {
+  min-height: 40px;
+}
+
+.applicant-title-main {
+  display: grid;
+  grid-template-columns: 42px minmax(0,1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.applicant-title-main .avatar {
+  width: 42px;
+  height: 42px;
+  background: #fff;
+  border: 1px solid #d7e1fa;
+  box-shadow: 0 1px 3px rgba(16,24,40,.04);
+}
+
+.applicant-card-body {
+  padding: 14px 15px 15px;
+}
+
+.applicant-card-body > p {
+  margin: 0 0 10px;
+  color: #667085;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.applicant-card-body .chips {
+  margin: 0;
+}
+
+.applicant-card-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (min-width: 760px) {
+  .employer-job-card-v2,
+  .applicant-card-v2 {
+    display: block;
+  }
+}
+
+@media (max-width: 759px) {
+  .employer-job-list,
+  .applicant-list {
+    gap: 14px;
+  }
+
+  .employer-job-title-bar,
+  .applicant-title-bar {
+    padding: 12px 13px;
+    gap: 8px;
+  }
+
+  .employer-job-title-bar h3,
+  .applicant-title-bar h2 {
+    font-size: 16px;
+  }
+
+  .employer-job-body,
+  .applicant-card-body {
+    padding: 12px 13px 13px;
+  }
+
+  .employer-job-facts {
+    grid-template-columns: 1fr 92px;
+  }
+
+  .employer-job-footer,
+  .applicant-card-footer {
+    padding: 10px 13px;
+  }
+
+  .employer-job-footer .btn {
+    flex: 1 1 calc(50% - 4px);
+  }
+
+  .applicant-card-footer .btn {
+    width: 100%;
+  }
+}
