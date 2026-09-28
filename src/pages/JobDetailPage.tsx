@@ -45,15 +45,52 @@ export function JobDetailPage() {
   if (loadError) return <main className="page-shell container"><div className="empty-state"><h1>آگهی بارگذاری نشد.</h1><p>{loadError}</p><button className="btn btn-secondary" onClick={() => window.location.reload()}>تلاش دوباره</button></div></main>
   if (!job) return <main className="page-shell container"><div className="empty-state"><h1>این آگهی فعال نیست.</h1><p>ممکن است بسته شده یا زمان آن به پایان رسیده باشد.</p><Link className="btn btn-primary" to="/jobs">بازگشت به فرصت‌های شغلی</Link></div></main>
 
+  const companyInitial = job.company?.trim()?.[0] || 'ک'
+
   return <main className="job-detail-page"><div className="container detail-wrap">
     <Link className="back-link" to="/jobs">→ بازگشت به فرصت‌های شغلی</Link>
-    <section className="detail-hero-card"><div><span className="status-badge">آگهی فعال</span><h1>{job.title}</h1><p className="detail-company"><Link to={`/companies/${job.companyId}`}>{job.company}</Link></p><div className="detail-meta"><span>{job.city}</span><span>·</span><span>{job.type}</span></div><p className="detail-salary">{job.salary}</p>{job.expiresAt && <p className="job-expiry-note">⏳ {job.daysLeft === 0 ? 'آخرین روز آگهی' : `${job.daysLeft?.toLocaleString('fa-IR')} روز تا پایان آگهی`} · تا {job.expiresAt}</p>}</div><Link className="btn btn-primary btn-large detail-apply-desktop" to={`/apply/${job.id}`}>درخواست همکاری</Link></section>
+
+    <section className="detail-hero-card detail-hero-v2">
+      <header className="detail-title-bar">
+        <div>
+          <span className="detail-title-kicker">فرصت شغلی</span>
+          <h1>{job.title}</h1>
+        </div>
+        <span className="detail-live-badge">فعال</span>
+      </header>
+
+      <div className="detail-summary-body">
+        <div className="detail-company-row">
+          <div className="detail-company-mark" aria-hidden="true">{companyInitial}</div>
+          <div>
+            <span className="detail-company-label">شرکت</span>
+            <p className="detail-company"><Link to={`/companies/${job.companyId}`}>{job.company}</Link></p>
+          </div>
+        </div>
+
+        <div className="detail-meta detail-meta-v2">
+          <span>⌖ {job.city}</span>
+          <span>·</span>
+          <span>◷ {job.type}</span>
+        </div>
+
+        <div className="detail-salary-panel">
+          <span>حقوق و مزایا</span>
+          <strong>{job.salary}</strong>
+        </div>
+
+        {job.expiresAt && <p className="job-expiry-note">⏳ {job.daysLeft === 0 ? 'آخرین روز آگهی' : `${job.daysLeft?.toLocaleString('fa-IR')} روز تا پایان آگهی`} · تا {job.expiresAt}</p>}
+
+        <Link className="btn btn-primary btn-large detail-apply-desktop" to={`/apply/${job.id}`}>درخواست همکاری</Link>
+      </div>
+    </section>
+
     <div className="detail-sections">
       <section className="detail-section"><h2>درباره این کار</h2><p>{job.description}</p></section>
       {job.requirements.length > 0 && <section className="detail-section"><h2>شرایط</h2><ul>{job.requirements.map((item) => <li key={item}>{item}</li>)}</ul></section>}
       {job.schedule && <section className="detail-section"><h2>ساعت کار</h2><p>{job.schedule}</p></section>}
       {job.benefits.length > 0 && <section className="detail-section"><h2>مزایا</h2><div className="chips">{job.benefits.map((item) => <span key={item}>{item}</span>)}</div></section>}
-      <section className="detail-section"><h2>درباره شرکت</h2><strong>{job.company}</strong>{job.companyDescription && <p>{job.companyDescription}</p>}<Link className="text-link company-detail-link" to={`/companies/${job.companyId}`}>مشاهده صفحه شرکت</Link></section>
+      <section className="detail-section detail-company-section"><h2>درباره شرکت</h2><strong>{job.company}</strong>{job.companyDescription && <p>{job.companyDescription}</p>}<Link className="text-link company-detail-link" to={`/companies/${job.companyId}`}>مشاهده صفحه شرکت</Link></section>
       <section className="job-safety-box">
         <div><strong>مشکلی در این آگهی دیدی؟</strong><p>اگر اطلاعات نادرست است، درخواست پول شده یا مورد مشکوکی وجود دارد، به مدیر سایت گزارش بده.</p></div>
         {!reported && <button className="text-button danger-text" onClick={() => setReportOpen((v) => !v)}>{reportOpen ? 'بستن فرم' : 'گزارش این آگهی'}</button>}
