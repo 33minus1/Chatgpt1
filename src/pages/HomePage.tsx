@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { categories, type Job } from '../data/mock'
 import { JobCard } from '../components/JobCard'
+import { CitySelect } from '../components/CitySelect'
 import { listJobs } from '../lib/backend'
 
 export function HomePage() {
@@ -53,14 +54,7 @@ export function HomePage() {
             </label>
             <label>
               <span>شهرت کجاست؟</span>
-              <select value={city} onChange={(e) => setCity(e.target.value)}>
-                <option value="">همه شهرها</option>
-                <option>تهران</option>
-                <option>کرج</option>
-                <option>تبریز</option>
-                <option>سنندج</option>
-                <option>ارومیه</option>
-              </select>
+              <CitySelect value={city} onChange={setCity} includeAll />
             </label>
             <button className="btn btn-primary btn-large">پیدا کردن کار</button>
           </form>
