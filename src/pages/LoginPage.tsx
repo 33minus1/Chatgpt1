@@ -1,18 +1,19 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CitySelect } from '../components/CitySelect'
 import { backendMode, ensureRole, loadEmployerProfile, loadSeekerProfile, saveEmployerProfileBackend, saveSeekerProfileBackend, sendPhoneOtp, verifyPhoneOtp } from '../lib/backend'
 import { assertAccountNotDeleted } from '../lib/deletedAccount'
+import { supabase } from '../lib/supabase'
 import { getSession, saveSession, type UserRole } from '../lib/session'
 import { cleanShortText, isValidIranMobile, normalizePhone, toEnglishDigits } from '../lib/validation'
 
-type Step = 'role' | 'phone' | 'code' | 'profile'
+type Step = 'checking' | 'role' | 'phone' | 'code' | 'profile'
 
 export function LoginPage() {
   const navigate = useNavigate()
   const existing = getSession()
-  const [step, setStep] = useState<Step>('role')
-  const [role, setRole] = useState<UserRole>('seeker')
+  const [step, setStep] = useState<Step>('checking')
+  const [role, setRole] = useState<UserRole>(existing?.role ?? 'seeker')
   const [phone, setPhone] = useState(existing?.phone ?? '')
   const [code, setCode] = useState('')
   const [name, setName] = useState('')
@@ -20,6 +21,37 @@ export function LoginPage() {
   const [city, setCity] = useState('سقز')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+
+  useEffect(() => {
+    let active = true
+
+    async function restoreSession() {
+      try {
+        if (!existing || !supabase) {
+          if (active) setStep('role')
+          return
+        }
+
+        const { data, error: sessionError } = await supabase.auth.getSession()
+        if (!active) return
+        if (sessionError || !data.session) {
+          setStep('role')
+          return
+        }
+
+        await assertAccountNotDeleted()
+        if (!active) return
+        navigate(existing.role === 'employer' ? '/employer' : '/account', { replace: true })
+      } catch (err) {
+        if (!active) return
+        setError(err instanceof Error ? err.message : '')
+        setStep('role')
+      }
+    }
+
+    restoreSession()
+    return () => { active = false }
+  }, [navigate])
 
   function chooseRole(value: UserRole) {
     setRole(value); setStep('phone'); setError('')
@@ -87,7 +119,9 @@ export function LoginPage() {
       <div className="container auth-wrap">
         <Link className="back-link" to="/">→ بازگشت به خانه</Link>
         <section className="apply-card auth-card">
-          {step === 'role' && <div className="auth-role-step"><div className="form-heading"><h1>برای چه کاری وارد می‌شوی؟</h1><p>مسیر ساده و جدا برای کارجو و کارفرما.</p></div><button className="role-choice" onClick={() => chooseRole('seeker')}><span>👤</span><div><strong>دنبال کار هستم</strong><small>پیدا کردن شغل و پیگیری درخواست‌ها</small></div></button><button className="role-choice" onClick={() => chooseRole('employer')}><span>🏢</span><div><strong>می‌خواهم نیرو استخدام کنم</strong><small>ثبت آگهی و دیدن متقاضیان</small></div></button></div>}
+          {step === 'checking' && <div className="form-heading"><h1>ورود به کارزان</h1><p>در حال بررسی ورود قبلی…</p></div>}
+
+          {step === 'role' && <div className="auth-role-step"><div className="form-heading"><h1>برای چه کاری وارد می‌شوی؟</h1><p>مسیر ساده و جدا برای کارجو و کارفرما.</p></div>{error && <p className="field-error">{error}</p>}<button className="role-choice" onClick={() => chooseRole('seeker')}><span>👤</span><div><strong>دنبال کار هستم</strong><small>پیدا کردن شغل و پیگیری درخواست‌ها</small></div></button><button className="role-choice" onClick={() => chooseRole('employer')}><span>🏢</span><div><strong>می‌خواهم نیرو استخدام کنم</strong><small>ثبت آگهی و دیدن متقاضیان</small></div></button></div>}
 
           {step === 'phone' && <form className="simple-form" onSubmit={submitPhone}><div className="progress-head"><span>مرحله ۱ از ۲</span><span>{role === 'seeker' ? 'ورود کارجو' : 'ورود کارفرما'}</span></div><div className="progress-track"><span style={{ width: '50%' }} /></div><div className="form-heading"><h1>شماره موبایل</h1><p>{backendMode === 'supabase' ? 'کد ورود با پیامک برایت ارسال می‌شود.' : 'نسخه پیش‌نمایش: پیامک واقعی ارسال نمی‌شود.'}</p></div><label><span>شماره موبایل</span><input dir="ltr" inputMode="numeric" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="09123456789" /></label>{error && <p className="field-error">{error}</p>}<button disabled={busy} className="btn btn-primary btn-large">{busy ? 'در حال ارسال...' : 'دریافت کد'}</button><button className="text-button" type="button" onClick={() => setStep('role')}>تغییر نوع حساب</button></form>}
 
