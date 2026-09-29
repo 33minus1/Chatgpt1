@@ -1,19 +1,49 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { sendPhoneOtp, verifyPhoneOtp } from '../lib/backend'
 import { isAdminBackend } from '../lib/adminBackend'
+import { supabase } from '../lib/supabase'
 import { clearSession } from '../lib/session'
 import { isValidIranMobile, normalizePhone, toEnglishDigits } from '../lib/validation'
 
-type Step = 'phone' | 'code' | 'waiting'
+type Step = 'checking' | 'phone' | 'code' | 'waiting'
 
 export function AdminLoginPage() {
   const navigate = useNavigate()
-  const [step, setStep] = useState<Step>('phone')
+  const [step, setStep] = useState<Step>('checking')
   const [phone, setPhone] = useState('')
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+
+  useEffect(() => {
+    let active = true
+
+    async function restoreAdminSession() {
+      try {
+        if (!supabase) {
+          if (active) setStep('phone')
+          return
+        }
+
+        const { data, error: sessionError } = await supabase.auth.getSession()
+        if (sessionError || !data.session) {
+          if (active) setStep('phone')
+          return
+        }
+
+        const allowed = await isAdminBackend()
+        if (!active) return
+        if (allowed) navigate('/admin', { replace: true })
+        else setStep('phone')
+      } catch {
+        if (active) setStep('phone')
+      }
+    }
+
+    restoreAdminSession()
+    return () => { active = false }
+  }, [navigate])
 
   async function submitPhone(e: FormEvent) {
     e.preventDefault()
@@ -41,7 +71,7 @@ export function AdminLoginPage() {
       await verifyPhoneOtp(phone, toEnglishDigits(code).trim())
       clearSession()
       const allowed = await isAdminBackend()
-      if (allowed) return navigate('/admin')
+      if (allowed) return navigate('/admin', { replace: true })
       setStep('waiting')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'کد تأیید درست نیست یا منقضی شده است.')
@@ -55,6 +85,13 @@ export function AdminLoginPage() {
       <div className="container auth-wrap">
         <Link className="back-link" to="/">→ بازگشت به سایت</Link>
         <section className="apply-card auth-card">
+          {step === 'checking' && (
+            <div className="form-heading">
+              <h1>ورود مدیریت</h1>
+              <p>در حال بررسی ورود قبلی…</p>
+            </div>
+          )}
+
           {step === 'phone' && (
             <form className="simple-form" onSubmit={submitPhone}>
               <div className="form-heading">
