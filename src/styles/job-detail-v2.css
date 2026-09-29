@@ -1,4 +1,4 @@
-/* v1.3.4 — job detail visual continuity with job cards */
+/* v1.3.5 — job detail visual continuity with distinct indigo title bar */
 
 .detail-hero-v2 {
   display: block;
@@ -22,7 +22,7 @@
   align-items: center;
   gap: 14px;
   padding: 18px 20px;
-  background: linear-gradient(135deg, #1f4fe0 0%, #2f63f6 58%, #5f84ff 100%);
+  background: linear-gradient(135deg, #312e81 0%, #4338ca 54%, #5b21b6 100%);
   color: #fff;
   border-bottom: 1px solid rgba(255,255,255,.18);
 }
@@ -30,7 +30,7 @@
 .detail-title-kicker {
   display: block;
   margin-bottom: 3px;
-  color: #dbe5ff;
+  color: #e4e7ff;
   font-size: 12px;
   font-weight: 700;
 }
