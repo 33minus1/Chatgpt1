@@ -1,4 +1,4 @@
-/* v1.3.4 — stronger job-list separation with a colored title bar */
+/* v1.3.5 — stronger job-list separation with a distinct indigo title bar */
 
 /* The results area is a section, not another giant card. */
 .jobs-page .jobs-results-panel {
@@ -48,12 +48,12 @@
     0 17px 38px rgba(16, 24, 40, .12);
 }
 
-/* Full-width title strip: visually separates the job title from the body. */
+/* Full-width title strip: deliberately distinct from the blue CTA button. */
 .job-card-titlebar {
   position: relative;
   padding: 14px 18px 15px;
-  background: linear-gradient(135deg, #1f52e8 0%, #3568f7 58%, #5b7fff 100%);
-  border-bottom: 1px solid rgba(20, 55, 160, .28);
+  background: linear-gradient(135deg, #312e81 0%, #4338ca 54%, #5b21b6 100%);
+  border-bottom: 1px solid rgba(36, 28, 105, .38);
   color: #fff;
 }
 
@@ -62,7 +62,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(90deg, rgba(255,255,255,.08), transparent 42%);
+  background: linear-gradient(90deg, rgba(255,255,255,.09), transparent 44%);
 }
 
 .job-card-titlebar-label {
