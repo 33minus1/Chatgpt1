@@ -1,4 +1,4 @@
-/* v1.3.6 — stronger job-list separation with a charcoal title bar */
+/* v1.3.7 — stronger job-list separation with a charcoal title bar and clearer card outlines */
 
 /* The results area is a section, not another giant card. */
 .jobs-page .jobs-results-panel {
@@ -18,7 +18,7 @@
 }
 
 .jobs-page .jobs-grid {
-  gap: 20px;
+  gap: 24px;
 }
 
 /* Each job is a complete independent visual object. */
@@ -28,11 +28,11 @@
   padding: 0;
   overflow: hidden;
   background: #ffffff;
-  border: 1px solid #cfd9e8;
+  border: 2px solid #b8c4d4;
   border-radius: 20px;
   box-shadow:
-    0 2px 4px rgba(16, 24, 40, .04),
-    0 12px 28px rgba(16, 24, 40, .085);
+    0 2px 6px rgba(15, 23, 42, .055),
+    0 14px 32px rgba(15, 23, 42, .11);
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 
@@ -42,10 +42,10 @@
 
 .job-card-v2:hover {
   transform: translateY(-2px);
-  border-color: #afbee3;
+  border-color: #7f8da3;
   box-shadow:
-    0 3px 7px rgba(16, 24, 40, .05),
-    0 17px 38px rgba(16, 24, 40, .12);
+    0 4px 10px rgba(15, 23, 42, .075),
+    0 20px 44px rgba(15, 23, 42, .145);
 }
 
 /* Neutral charcoal title strip: clearly distinct from the blue CTA. */
@@ -237,15 +237,20 @@
 
 @media (max-width: 759px) {
   .jobs-page .jobs-grid {
-    gap: 20px;
+    gap: 22px;
   }
 
   .job-card-v2 {
     border-radius: 18px;
-    border-color: #ccd7e7;
+    border-width: 2px;
+    border-color: #b8c4d4;
     box-shadow:
-      0 2px 6px rgba(16, 24, 40, .05),
-      0 11px 25px rgba(16, 24, 40, .09);
+      0 2px 7px rgba(15, 23, 42, .065),
+      0 13px 30px rgba(15, 23, 42, .115);
+  }
+
+  .job-card-v2:hover {
+    border-color: #7f8da3;
   }
 
   .job-card-titlebar {
